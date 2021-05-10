@@ -46,6 +46,7 @@ man = face_client.person_group_person.create(PERSON_GROUP_ID, "Pulkit")
 # Define child friend
 child = face_client.person_group_person.create(PERSON_GROUP_ID, "Utkarsh")
 
+print(woman.person_id)
 '''
 Detect faces and register to correct person
 '''
