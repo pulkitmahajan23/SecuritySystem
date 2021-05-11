@@ -16,6 +16,8 @@ from PIL import Image, ImageDraw
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person
+from twilio.rest import Client
+from datetime import datetime
 
 def image_capture():
     video_capture = cv2.VideoCapture(0)
@@ -87,6 +89,22 @@ def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
     print()
     return identified_person
 
+def send_sms(message):
+    account_sid = "ACf687beee23ceb158ab32e8032e5ce223"
+    # Your Auth Token from twilio.com/console
+    auth_token  = "d2a37c81ec5099420407626ad0842190"
+
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        to="+918604818820", 
+        from_="+16504339232",
+        body="message")
+
+    print(message.sid)
+
+
+
 if __name__=='__main__':
     KEY = "1d8af000bf8146bbaad633bae10a8d7e"
     ENDPOINT = "https://ece3502.cognitiveservices.azure.com/"
@@ -101,4 +119,11 @@ if __name__=='__main__':
         os.remove('Test_image.jpg')
         if name=='Pulkit':
             print("Granting access")
+            message="Pulkit has entered on {}"+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            send_sms(message)
+        else:
+            print("Intruder alert")
+            message="Intruder alert on {}"+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            send_sms(message)
+
         
