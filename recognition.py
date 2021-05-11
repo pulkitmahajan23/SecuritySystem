@@ -68,10 +68,7 @@ def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
     for face in faces:
         face_ids.append(face.face_id)
         print(face.face_id)
-    # </snippet_identify_testimage>
-
-    # <snippet_identify>
-    # Identify faces
+ 
     identified_person=""
     results = face_client.face.identify(face_ids, PERSON_GROUP_ID)
     print('Identifying faces in {}'.format(os.path.basename(image.name)))
@@ -99,9 +96,9 @@ def send_sms(message):
     message = client.messages.create(
         to="+918604818820", 
         from_="+16504339232",
-        body="message")
+        body=message)
 
-    print(message.sid)
+    #print(message.sid)
 
 
 
@@ -119,11 +116,11 @@ if __name__=='__main__':
         os.remove('Test_image.jpg')
         if name=='Pulkit':
             print("Granting access")
-            message="Pulkit has entered on {}"+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            message=name+" has entered on "+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             send_sms(message)
         else:
             print("Intruder alert")
-            message="Intruder alert on {}"+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            message="Intruder alert on "+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             send_sms(message)
 
         
