@@ -90,8 +90,8 @@ if __name__=='__main__':
     KEY = "1d8af000bf8146bbaad633bae10a8d7e"
     ENDPOINT = "https://ece3502.cognitiveservices.azure.com/"
     face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
-    #PERSON_GROUP_ID=person_group(face_client)
-    PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03'
+    PERSON_GROUP_ID=person_group(face_client)
+    '''PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03'
     test_image_array = glob.glob('Test.jpg')
     image = open(test_image_array[0], 'r+b')
 
@@ -121,4 +121,4 @@ if __name__=='__main__':
         else:
             print('No person identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
     # </snippet_identify>
-    print()
+    print()'''
