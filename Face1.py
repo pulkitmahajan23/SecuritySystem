@@ -46,7 +46,7 @@ man = face_client.person_group_person.create(PERSON_GROUP_ID, "Pulkit")
 # Define child friend
 child = face_client.person_group_person.create(PERSON_GROUP_ID, "Utkarsh")
 
-print(woman.person_id)
+#print(woman.person_id)
 '''
 Detect faces and register to correct person
 '''
@@ -54,14 +54,14 @@ Detect faces and register to correct person
 woman_images = [file for file in glob.glob('*.jpg') if file.startswith("w")]
 man_images = [file for file in glob.glob('*.jpg') if file.startswith("m")]
 child_images = [file for file in glob.glob('*.jpg') if file.startswith("ch")]
-
+'''
 var=glob.glob('woman1-person-group.jpg')
 image=open(var[0],'r+b')
 faces = face_client.face.detect_with_stream(image, detection_model='detection_03')
 for face in faces:
     #face_ids.append(face.face_id)
     print(face.face_id)
-
+'''
 
 # Add to a woman person
 for image in woman_images:
@@ -103,12 +103,6 @@ while (True):
         face_client.person_group.delete(person_group_id=PERSON_GROUP_ID)
         sys.exit('Training the person group has failed.')
     time.sleep(5)
-
-a='https://ece3502.cognitiveservices.azure.com/face/v1.0/persongroups/abc/persons/'+PERSON_GROUP_ID+'Ocp-Apim-Subscription-Key:1d8af000bf8146bbaad633bae10a8d7e'
-x=requests.get(a)
-print(x.status_code)
-
-
 
 test_image_array = glob.glob('test-image-person-group.jpg')
 image = open(test_image_array[0], 'r+b')
