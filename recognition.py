@@ -8,6 +8,8 @@ import uuid
 import requests
 import cv2
 import train
+import keyboard
+from gpiozero import MotionSensor
 from urllib.parse import urlparse
 from io import BytesIO
 from PIL import Image, ImageDraw
@@ -68,6 +70,7 @@ def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
 
     # <snippet_identify>
     # Identify faces
+    identified_person=""
     results = face_client.face.identify(face_ids, PERSON_GROUP_ID)
     print('Identifying faces in {}'.format(os.path.basename(image.name)))
     if not results:
@@ -76,15 +79,26 @@ def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
         if len(person.candidates) > 0:
             print('Person for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id, os.path.basename(image.name), person.candidates[0].confidence)) # Get topmost confidence score
             person_info=train.get_person_info(ENDPOINT,KEY,PERSON_GROUP_ID,person.candidates[0].person_id)
+            identified_person=person_info['name']
             print("Name: {}".format(person_info['name']))
         else:
             print('No person identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
     # </snippet_identify>
     print()
+    return identified_person
 
 if __name__=='__main__':
     KEY = "1d8af000bf8146bbaad633bae10a8d7e"
     ENDPOINT = "https://ece3502.cognitiveservices.azure.com/"
     PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03'
-    image_capture()
-    identify(KEY,ENDPOINT,PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03')
+    pir=MotionSensor(4)
+    while True:
+        print("Waiting")
+        pir.wait_for_motion()
+        print("Person detected, Identifying")
+        image_capture()
+        name=identify(KEY,ENDPOINT,PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03')
+        os.remove('Test_image.jpg')
+        if name=='Pulkit':
+            print("Granting access")
+        
