@@ -37,29 +37,25 @@ def person_group(face_client):
         n = open(image, 'r+b')
         face_client.person_group_person.add_face_from_stream(PERSON_GROUP_ID, neeraj.person_id,n)
     
-    print('Sleeping after neeraj')
-    time.sleep(60)
+    #time.sleep(60)
 
     for image in utkarsh_images:
         u = open(image, 'r+b')
         face_client.person_group_person.add_face_from_stream(PERSON_GROUP_ID, utkarsh.person_id,u)
 
-    print('Sleeping after neeraj')
-    time.sleep(60)
+    #time.sleep(60)
 
     for image in shivani_images:
         s = open(image, 'r+b')
         face_client.person_group_person.add_face_from_stream(PERSON_GROUP_ID, shivani.person_id,s)
     
-    print('Sleeping after neeraj')
-    time.sleep(60)
+    #time.sleep(60)
 
     for image in pulkit_images:
         p = open(image, 'r+b')
         face_client.person_group_person.add_face_from_stream(PERSON_GROUP_ID, pulkit.person_id,p)
 
-    print('Sleeping after neeraj')
-    time.sleep(60)
+    #time.sleep(60)
 
     print('Training the person group...')
 
