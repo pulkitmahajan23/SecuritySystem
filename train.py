@@ -87,34 +87,3 @@ if __name__=='__main__':
     ENDPOINT = "https://ece3502.cognitiveservices.azure.com/"
     face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
     PERSON_GROUP_ID=person_group(face_client)
-    '''PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03'
-    test_image_array = glob.glob('Test.jpg')
-    image = open(test_image_array[0], 'r+b')
-
-    print('Pausing for 30 seconds to avoid triggering rate limit on free account...')
-    time.sleep (60)
-
-    # Detect faces
-    face_ids = []
-    # We use detection model 3 to get better performance.
-    faces = face_client.face.detect_with_stream(image, detection_model='detection_03')
-    for face in faces:
-        face_ids.append(face.face_id)
-        print(face.face_id)
-    # </snippet_identify_testimage>
-
-    # <snippet_identify>
-    # Identify faces
-    results = face_client.face.identify(face_ids, PERSON_GROUP_ID)
-    print('Identifying faces in {}'.format(os.path.basename(image.name)))
-    if not results:
-        print('No person identified in the person group for faces from {}.'.format(os.path.basename(image.name)))
-    for person in results:
-        if len(person.candidates) > 0:
-            print('Person for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id, os.path.basename(image.name), person.candidates[0].confidence)) # Get topmost confidence score
-            person_info=get_person_info(ENDPOINT,KEY,PERSON_GROUP_ID,person.candidates[0].person_id)
-            print("Name: {}".format(person_info['name']))
-        else:
-            print('No person identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
-    # </snippet_identify>
-    print()'''
