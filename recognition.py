@@ -116,6 +116,7 @@ if __name__=='__main__':
         os.remove('Test_image.jpg')
         if name=='Pulkit':
             print("Granting access")
+            print("Message sent")
             message=name+" has entered on "+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             send_sms(message)
         else:
