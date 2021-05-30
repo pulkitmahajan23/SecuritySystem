@@ -25,4 +25,4 @@ def vfeed():
         b = f.read()
     return Response(b'--frame\r\n'+b'Content-Type: image/jpeg\r\n\r\n' + b + b'\r\n')
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host="0.0.0.0",port=80)
