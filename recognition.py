@@ -18,6 +18,8 @@ from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person
 from twilio.rest import Client
 from datetime import datetime
+import db_init
+from sqlite3 import connect
 
 def image_capture():
     video_capture = cv2.VideoCapture(0)
@@ -109,11 +111,19 @@ if __name__=='__main__':
     pir=MotionSensor(4)
     while True:
         print("Waiting")
+        conn = connect("data.db")
+        conn.execute("UPDATE STAT SET STATUS=? WHERE 1=1", ("f",))
+        conn.commit()
+        conn.close()
         pir.wait_for_motion()
+        conn = connect("data.db")
+        conn.execute("UPDATE STAT SET STATUS=? WHERE 1=1", ("t",))
+        conn.commit()
+        conn.close()
         print("Person detected, Identifying")
         image_capture()
         name=identify(KEY,ENDPOINT,PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03')
-        os.remove('Test_image.jpg')
+        #os.remove('Test_image.jpg')
         if name=='Pulkit':
             print("Granting access")
             print("Message sent")
