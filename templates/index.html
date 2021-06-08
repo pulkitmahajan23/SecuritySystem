@@ -6,13 +6,13 @@
         <title>Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="../static/CSS/index.css">
-        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        <link rel="stylesheet" type="text/css" href="../static/index.css">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         
     </head>
     
-    <body onload="setInterval(myFunction, 3000);">
+    <body onload="myFunction();setInterval(myFunction, 3000);">
         <p class="text" id="text1"></p>
         <img src="/vfeed" alt="Image" width="900" height="570" class="dashboard" id="dashboard">
         <p class="text" id="text"></p>
@@ -21,14 +21,20 @@
                 $.post("/danger", {}, function getter(response, error){
                     console.log(response);
                     if (response == "1") {
-                        document.getElementById("text").style.color = "red";
+                        document.getElementById("text").style.color = "black";
                         document.getElementById("text").innerHTML = "Warning: Someone is near the door";
-                        document.getElementById("text1").innerHTML = "Person detected:";
+                        document.getElementById("text1").innerHTML = "Person detected: Trying to identify";
+    
                     }
-                    else {
+                    else if(response=="0"){
                         document.getElementById("text").style.color = "green";
                         document.getElementById("text").innerHTML = "Message: No body near the door";
                         document.getElementById("text1").innerHTML = "Person detected: None";
+                    }
+                    else{
+                        document.getElementById("text").style.color = "black";
+                        document.getElementById("text").innerHTML = "Access granted";
+                        document.getElementById("text1").innerHTML = "Person detected: "+name;
                     }
                 });
             }

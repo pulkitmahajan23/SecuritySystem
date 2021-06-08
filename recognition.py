@@ -57,7 +57,7 @@ def image_capture():
 
 def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
     face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
-    test_image_array = glob.glob('Test_image.jpg')
+    test_image_array = glob.glob('Pulkit-5.jpg')
     image = open(test_image_array[0], 'r+b')
 
     print('Pausing for 60 seconds to avoid triggering rate limit on free account...')
@@ -91,7 +91,7 @@ def identify(KEY,ENDPOINT,PERSON_GROUP_ID):
 def send_sms(message):
     account_sid = "ACf687beee23ceb158ab32e8032e5ce223"
     # Your Auth Token from twilio.com/console
-    auth_token  = "d2a37c81ec5099420407626ad0842190"
+    auth_token  = "ea11cac2f1d02b46b365a77d21b99549"
 
     client = Client(account_sid, auth_token)
 
@@ -115,13 +115,13 @@ if __name__=='__main__':
         conn.execute("UPDATE STAT SET STATUS=? WHERE 1=1", ("f",))
         conn.commit()
         conn.close()
-        #pir.wait_for_motion()
+        pir.wait_for_motion()
         conn = connect("data.db")
         conn.execute("UPDATE STAT SET STATUS=? WHERE 1=1", ("t",))
         conn.commit()
         conn.close()
         print("Person detected, Identifying")
-        #image_capture()
+        image_capture()
         name=identify(KEY,ENDPOINT,PERSON_GROUP_ID='5b41b157-3750-48c1-9e75-7b910e923b03')
         #os.remove('Test_image.jpg')
         if name=='Pulkit':
@@ -129,6 +129,11 @@ if __name__=='__main__':
             print("Message sent")
             message=name+" has entered on "+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             send_sms(message)
+            conn = connect("data.db")
+            conn.execute("UPDATE STAT SET STATUS=? WHERE 1=1", ("a",))
+            conn.commit()
+            conn.close()
+            time.sleep(10)
         else:
             print("Intruder alert")
             message="Intruder alert on "+datetime.now().strftime("%d/%m/%Y %H:%M:%S")
